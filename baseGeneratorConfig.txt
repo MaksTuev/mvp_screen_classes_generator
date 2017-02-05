@@ -1,0 +1,116 @@
+{
+	"cfg" : [
+		
+	],
+
+	"parametersSets" : [
+
+	],
+
+	"globalParts" : [
+		{
+			"name": "pathToScreensPackage",
+			"values" : [
+				{
+					"value" : "/"
+				}
+			]
+		},
+		{
+			"name": "screenTypeName",
+
+			"values" : [
+				{
+					"cfg" : [
+						{
+							"key" : "screenType",
+						 	"value" : "activity"
+					 	}
+					],
+					"value" : "Activity"
+				},
+				{
+					"cfg" : [
+						{
+							"key" : "screenType",
+						 	"value" : "fragment"
+					 	}
+					],
+					"value" : "Fragment"
+				}
+			]
+		},
+		{
+			"name": "screenTypeNameLowerCase",
+
+			"values" : [
+				{
+					"cfg" : [
+						{
+							"key" : "screenType",
+						 	"value" : "activity"
+					 	}
+					],
+					"value" : "activity"
+				},
+				{
+					"cfg" : [
+						{
+							"key" : "screenType",
+						 	"value" : "fragment"
+					 	}
+					],
+					"value" : "fragment"
+				}
+			]
+		},
+		{
+			"name": "rawScreenInputParameterType",
+
+			"values" : [
+				{
+					"cfg" : [
+						{
+							"key" : "screenType",
+						 	"value" : "activity"
+					 	}
+					],
+					"value" : "Intent"
+				},
+				{
+					"cfg" : [
+						{
+							"key" : "screenType",
+						 	"value" : "fragment"
+					 	}
+					],
+					"value" : "Bundle"
+				}
+			]
+		},
+		{
+			"name": "rawScreenInputParameterName",
+			"values" : [
+				{
+					"cfg" : [
+						{
+							"key" : "screenType",
+						 	"value" : "activity"
+					 	}
+					],
+					"value" : "intent"
+				},
+				{
+					"cfg" : [
+						{
+							"key" : "screenType",
+						 	"value" : "fragment"
+					 	}
+					],
+					"value" : "args"
+				}
+			]
+		}
+
+	]
+}

@@ -1,0 +1,109 @@
+{
+	"cfg" : [
+		{
+			"key" : "screenType",
+		 	"value" : "fragment",
+		 	"_comment": "value activity or fragment"
+		},
+		{
+			"key" : "hasInputParams",
+		 	"value" : "true",
+		 	"_comment": "value false or true"
+		},
+		{
+			"key" : "hasResult",
+		 	"value" : "true",
+		 	"_comment": "value false or true"
+		},
+		{
+			"key" : "rendarable",
+		 	"value" : "true",
+		 	"_comment": "value false or true" 
+		},
+		{
+			"key" : "lds",
+		 	"value" : "true",
+		 	"_comment": "value false or true"
+		},
+		{
+			"key" : "swr",
+		 	"value" : "true",
+		 	"_comment": "value false or true"
+		},
+		{
+			"key" : "pgn",
+		 	"value" : "true",
+		 	"_comment": "value false or true"
+		}
+
+	],
+
+	"parametersSets" : [
+		{
+			"name": "inputScreenParams",
+			"parameters" : [
+				{
+					"type": "String",
+					"name": "bookId"
+				},
+				{
+					"type": "Filter",
+					"name": "filter"
+				}
+
+			]
+		},
+		{
+			"name": "resultScreenParams",
+			"parameters" : [
+				{
+					"type": "Boolean",
+					"name": "success"
+				}
+			]
+		}
+	],
+
+	"globalParts" : [
+		{
+			"name": "screenPackageName",
+			"values": [
+				{
+					"value" : "screenPackageName"
+				}
+			]
+		},
+		{
+			"name": "screenName",
+			"values": [
+				{
+					"value" : "screenName" 
+				}
+			]
+		},
+		{
+			"name": "screenNameLowerCase",
+			"values": [
+				{
+					"value" : "screenNameLowerCase" 
+				}
+			]
+		},
+		{
+			"name": "humanScreenName",
+			"values": [
+				{
+					"value" : "humanScreenName" 
+				}
+			]
+		},
+		{
+			"name": "layoutScreenName",
+			"values": [
+				{
+					"value" : "[[screenNameLowerCase]]"
+				}
+			]
+		}
+	]
+}

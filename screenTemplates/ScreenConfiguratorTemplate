@@ -1,0 +1,114 @@
+{
+	"classNameTemplate": "[[screenName]]ScreenConfigurator.java",
+	"codeTemplate": 
+		"package com.agna.realmvp.realmvpsample.ui.screen.[[screenPackgeName]];
+
+
+		import android.content.Context;
+		import android.os.Bundle;
+
+		import com.agna.ferro.core.PersistentScreenScope;
+		import com.agna.ferro.mvp.component.ScreenComponent;
+		import com.agna.ferro.mvp.component.scope.PerScreen;
+		import com.agna.realmvp.realmvpsample.app.AppComponent;
+		import com.agna.realmvp.realmvpsample.ui.base.screen.configurator.[[screenTypeName]]ScreenConfigurator;
+		import com.agna.realmvp.realmvpsample.ui.base.dagger.CustomScreenModule;
+		import com.agna.realmvp.realmvpsample.ui.base.dagger.[[screenTypeName]]ScreenModule;
+
+		import dagger.Component;
+		import dagger.Module;
+
+		public class [[screenName]]ScreenConfigurator extends [[screenTypeName]]ScreenConfigurator {
+
+		    @PerScreen
+		    @Component(dependencies = AppComponent.class, modules = {[[screenTypeName]]ScreenModule.class[[screenModuleRegistration]]})
+		    interface [[screenName]]ScreenComponent extends ScreenComponent<[[screenName]][[screenTypeName]]View> {
+		    }
+
+		    public BookScreenConfigurator(Context context, PersistentScreenScope persistentScreenScope, [[rawScreenInputParameterType]] [[rawScreenInputParameterName]]) {
+		        super(context, persistentScreenScope, [[rawScreenInputParameterName]]);
+		    }
+		    [[screenModule]]
+		    @Override
+		    protected ScreenComponent createScreenComponent(AppComponent appComponent,
+		                                                    [[screenTypeName]]ScreenModule [[screenTypeNameLowerCase]]ScreenModule,
+		                                                    [[rawScreenInputParameterType]] [[rawScreenInputParameterName]]) {
+		        return Dagger[[screenName]]ScreenConfigurator_[[screenName]]ScreenComponent.builder()
+		                .appComponent(appComponent)[[screenModuleCreation]]
+		                .[[screenTypeNameLowerCase]]ScreenModule([[screenTypeNameLowerCase]]ScreenModule)
+		                .build();
+		    }
+
+		    @Override
+		    public String getName() {
+		        return \"[[screenName]]\";
+		    }
+
+		}",
+
+
+
+	"parts" : [
+		{
+			"name": "classPackageName",
+			"values": [
+				{
+					"value" : ""
+				}
+			]
+		},
+		{
+			"name": "screenModuleRegistration",
+			"values": [
+				{
+					"cfg" : [
+						{
+							"key" : "hasInputParams",
+						 	"value" : "true"
+					 	}
+					],
+					"value" : ", [[screenName]]ScreenModule.class"
+				}
+			]
+		},
+		{
+			"name": "screenModuleCreation",
+			"values": [
+				{
+					"cfg" : [
+						{
+							"key" : "hasInputParams",
+						 	"value" : "true"
+					 	}
+					],
+					"value" : "
+                .[[screenNameLowerCase]]ScreenModule(new [[screenName]]ScreenModule(new [[screenName]][[screenTypeName]]Route([[rawScreenInputParameterName]])))"
+				}
+			]
+		},
+		{
+			"name": "screenModule",
+			"values": [
+				{
+					"cfg" : [
+						{
+							"key" : "hasInputParams",
+						 	"value" : "true"
+					 	}
+					],
+					"value" : 
+						"
+
+					    @Module
+					    public static class [[screenName]]ScreenModule extends CustomScreenModule<[[screenName]][[screenTypeName]]Route>{
+					        public [[screenName]]ScreenModule([[screenName]][[screenTypeName]]Route route) {
+					            super(route);
+					        }
+					    }"
+				}
+			]
+		}
+
+		
+	]
+}
