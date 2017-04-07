@@ -1,0 +1,691 @@
+{
+	"classNameTemplate": "[[viewName]].java",
+	"codeTemplate": 
+"package ru.avs.express.android.ui.screen.[[screenPackageName]];
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import javax.inject.Inject;
+
+import lombok.Data;
+import ru.avs.express.android.R;
+import ru.avs.express.android.ui.base.placeholder.PlaceHolderView;
+import ru.avs.express.android.ui.base.recycler.PaginationableAdapter;
+import ru.avs.express.android.ui.base.recycler.changes.ListChanges;
+import ru.avs.express.android.ui.base.screen.activity.BaseLdsSwrPgnActivityView;
+import ru.avs.express.android.ui.base.screen.activity.BaseLdsSwrActivityView;
+import ru.avs.express.android.ui.base.screen.activity.BaseLdsActivityView;
+import ru.avs.express.android.ui.base.screen.activity.BaseHandleableErrorActivityView;
+import ru.avs.express.android.ui.base.screen.activity.BaseRenderableHandleableErrorActivityView;
+import ru.avs.express.android.ui.base.screen.fragment.BaseLdsSwrPgnFragmentView;
+import ru.avs.express.android.ui.base.screen.fragment.BaseLdsSwrFragmentView;
+import ru.avs.express.android.ui.base.screen.fragment.BaseLdsFragmentView;
+import ru.avs.express.android.ui.base.screen.fragment.BaseHandleableErrorFragmentView;
+import ru.avs.express.android.ui.base.screen.fragment.BaseRenderableHandleableErrorFragmentView;
+import ru.avs.express.android.ui.base.screen.configurator.ScreenConfigurator;
+import ru.avs.express.android.ui.base.screen.presenter.CorePresenter;
+import ru.avs.express.android.ui.base.screen.view.ChangeableListView;
+
+
+/**
+* Вью экрана [[humanScreenName]]
+*/
+@Data
+public class [[viewName]] extends [[viewBaseClass]][[implementsView]] {
+
+    @Inject
+    [[presenterName]] presenter;
+
+    [[placeHolderViewField]][[swipeRefreshLayoutField]][[recyclerViewField]][[toolbarField]]
+    [[adapterField]]
+    [[inflateView]]
+    @Override
+    public CorePresenter[] getPresenters() {
+        return new CorePresenter[]{presenter};
+    }
+
+    @Override
+    public ScreenConfigurator createScreenConfigurator(Context context, [[rawScreenInputParameterType]] [[rawScreenInputParameterName]]) {
+        return new [[configuratorName]](context, [[rawScreenInputParameterName]]);
+    }
+
+    [[notifyListChangesMethod]][[getPlaceHolderViewMethod]][[getSwipeRefreshLayoutMethod]][[getPaginationableAdapterMethod]][[renderInternalMethod]][[onCreateMethod]][[findViewsMethod]][[initToolbarMethod]][[initRecyclerMethod]]
+    private void initListeners() {
+        //todo init listeners here
+    }
+}",
+
+
+
+	"parts" : [
+	    {
+            "name": "recyclerViewField",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "hasRecyclerView",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"private RecyclerView recyclerView;
+    "
+                }
+            ]
+        },
+        {
+            "name": "implementsView",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "hasRecyclerView",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :" implements ChangeableListView"
+                }
+            ]
+        },
+        {
+            "name": "initRecyclerMethod",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "hasRecyclerView",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"private void initRecycler() {
+        adapter = new TestAdapter();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+        adapter.set[[itemListenerType]](null); //todo add listener
+        [[setHeaderListener]][[setShowMoreListener]]
+    }
+
+    "
+                }
+            ]
+        },
+        {
+            "name": "setShowMoreListener",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "pgn",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"adapter.setOnShowMoreListener(() -> presenter.loadMore());
+        "
+                }
+            ]
+        },
+        {
+            "name": "setHeaderListener",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "recyclerViewWithHeader",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"adapter.setOnHeaderActionListener(null); //todo add listener
+        "
+                }
+            ]
+        },
+        {
+            "name": "initToolbarMethod",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "hasToolbar",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"private void initToolbar() {
+        toolbar.setNavigationOnClickListener(view -> presenter.finish());
+        //todo init toolbar here
+    }
+
+    "
+                }
+            ]
+        },
+        {
+            "name": "findViewsMethod",
+            "values": [
+                {
+                    "value" :
+"private void findViews() {
+        [[findPlaceHolderView]][[findSwipeRefreshLayout]][[findRecyclerView]][[findToolbar]]//todo find views here
+    }
+
+    "
+                }
+            ]
+        },
+        {
+            "name": "findToolbar",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "hasToolbar",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"toolbar = (Toolbar)[[findViewPrefix]]findViewById(R.id.toolbar);
+        "
+                }
+            ]
+        },
+        {
+            "name": "findRecyclerView",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "hasRecyclerView",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"recyclerView = (RecyclerView)[[findViewPrefix]]findViewById(R.id.recycler);
+        "
+                }
+            ]
+        },
+        {
+            "name": "findSwipeRefreshLayout",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "swr",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"swipeRefreshLayout = (SwipeRefreshLayout)[[findViewPrefix]]findViewById(R.id.swipe_refresh);
+        "
+                }
+            ]
+        },
+        {
+            "name": "findPlaceHolderView",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "lds",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"placeHolderView = (PlaceHolderView)[[findViewPrefix]]findViewById(R.id.placeholder);
+        "
+                }
+            ]
+        },
+        {
+            "name": "initToolbarMethodInvoke",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "hasToolbar",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"
+        initToolbar();"
+                }
+            ]
+        },
+        {
+            "name": "initRecyclerMethodInvoke",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "hasRecyclerView",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"
+        initRecycler();"
+                }
+            ]
+        },
+        {
+            "name": "onCreateMethod",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "screenType",
+                            "value" : "activity"
+                        }
+                    ],
+                    "value" :
+"@Override
+    public void onCreate(Bundle savedInstanceState, @Nullable PersistableBundle persistentState, boolean viewRecreated) {
+        super.onCreate(savedInstanceState, persistentState, viewRecreated);
+        findViews();
+        initListeners();[[initToolbarMethodInvoke]][[initRecyclerMethodInvoke]]
+    }
+
+    "
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "screenType",
+                            "value" : "fragment"
+                        }
+                    ],
+                    "value" :
+"@Override
+    public void onActivityCreated(Bundle savedInstanceState, boolean viewRecreated) {
+        super.onActivityCreated(savedInstanceState, viewRecreated);
+        findViews();
+        initListeners();[[initToolbarMethodInvoke]][[initRecyclerMethodInvoke]]
+    }
+
+    "
+                }
+            ]
+        },
+        {
+            "name": "renderAdapter",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "hasRecyclerView",
+                            "value" : "true"
+                        },
+                        {
+                            "key" : "recyclerViewWithHeader",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :"adapter.setData(screenModel);"
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "hasRecyclerView",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :"adapter.setData(screenModel.[[recyclerListItemsGetter]]);"
+                }
+            ]
+        },
+        {
+            "name": "getPaginationableAdapterMethod",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "pgn",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"@Override
+    protected PaginationableAdapter getPaginationableAdapter() {
+        return adapter;
+    }
+
+    "
+                }
+            ]
+        },
+        {
+            "name": "renderInternalMethod",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "renderable",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"@Override
+    protected void renderInternal([[screenModelName]] screenModel) {
+        [[renderAdapter]]
+        //todo render model here
+    }
+
+    "
+                }
+            ]
+        },
+        {
+            "name": "getSwipeRefreshLayoutMethod",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "swr",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"@Override
+    protected SwipeRefreshLayout getSwipeRefreshLayout() {
+        return swipeRefreshLayout;
+    }
+
+    "
+                }
+            ]
+        },
+        {
+            "name": "getPlaceHolderViewMethod",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "lds",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"@Override
+    protected PlaceHolderView getPlaceHolderView() {
+        return placeHolderView;
+    }
+
+    "
+                }
+            ]
+        },
+        {
+            "name": "notifyListChangesMethod",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "hasRecyclerView",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"@Override
+    public void notifyListChanged(ListChanges listChanges) {
+        adapter.notifyListChanged(listChanges);
+    }
+
+    "
+                }
+            ]
+        },
+        {
+            "name": "inflateView",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "screenType",
+                            "value" : "activity"
+                        }
+                    ],
+                    "value" :
+"@Override
+    public int getContentView() {
+        return 0;//R.layout.[[layoutScreenName]]; //todo create layout
+    }
+    "
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "screenType",
+                            "value" : "fragment"
+                        }
+                    ],
+                    "value" :
+"@Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        //return inflater.inflate(R.layout.[[layoutScreenName]], container); //todo create layout
+        return null;
+    }
+    "
+                }
+            ]
+        },
+        {
+            "name": "toolbarField",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "hasToolbar",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"private Toolbar toolbar;
+    "
+                }
+            ]
+        },
+        {
+            "name": "adapterField",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "hasRecyclerView",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"private [[adapterName]] adapter;
+    "
+                }
+            ]
+        },
+	    {
+            "name": "swipeRefreshLayoutField",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "swr",
+                            "value" : "true"
+                        },
+                        {
+                            "key" : "lds",
+                            "value" : "true"
+                        },
+                        {
+                            "key" : "renderable",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"private SwipeRefreshLayout swipeRefreshLayout;
+    "
+                }
+            ]
+        },
+        {
+            "name": "placeHolderViewField",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "lds",
+                            "value" : "true"
+                        },
+                        {
+                            "key" : "renderable",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"private PlaceHolderView placeHolderView;
+    "
+                }
+            ]
+        },
+		{
+			"name": "viewBaseClass",
+			"values": [
+				{
+					"cfg" : [
+                        {
+                            "key" : "pgn",
+                            "value" : "true"
+                        },
+                        {
+                            "key" : "swr",
+                            "value" : "true"
+                        },
+                        {
+                            "key" : "lds",
+                            "value" : "true"
+                        },
+                        {
+                            "key" : "renderable",
+                            "value" : "true"
+                        }
+
+					],
+					"value" : "BaseLdsSwrPgn[[screenTypeName]]View<[[screenModelName]]>"
+				},
+				{
+                    "cfg" : [
+                        {
+                            "key" : "swr",
+                            "value" : "true"
+                        },
+                        {
+                            "key" : "lds",
+                            "value" : "true"
+                        },
+                        {
+                            "key" : "renderable",
+                            "value" : "true"
+                        }
+
+                    ],
+                    "value" : "BaseLdsSwr[[screenTypeName]]View<[[screenModelName]]>"
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "lds",
+                            "value" : "true"
+                        },
+                        {
+                            "key" : "renderable",
+                            "value" : "true"
+                        }
+
+                    ],
+                    "value" : "BaseLds[[screenTypeName]]View<[[screenModelName]]>"
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "renderable",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" : "BaseRenderableHandleableError[[screenTypeName]]View<[[screenModelName]]>"
+                 },
+                {
+                    "value" : "BaseHandleableError[[screenTypeName]]View"
+                }
+            ]
+        },
+        {
+            "name": "fields",
+            "parametersSetName" : "recyclerListItemsParam",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "pgn",
+                            "value" : "true"
+                        },
+                        {
+                            "key" : "hasRecyclerView",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" : "private DataList<[[parameterType]]> [[parameterName]] = DataList.empty();"
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "hasRecyclerView",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" : "private List<[[parameterType]]> [[parameterName]] = new ArrayList<>();"
+                },
+                {
+                    "value" : ""
+                }
+            ]
+        },
+        {
+            "name": "findViewPrefix",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "screenType",
+                            "value" : "activity"
+                        }
+                    ],
+                    "value" : ""
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "screenType",
+                            "value" : "fragment"
+                        }
+                    ],
+                    "value" : "getView()."
+                }
+            ]
+        }
+	]
+}

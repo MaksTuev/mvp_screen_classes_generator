@@ -14,6 +14,7 @@ import java.util.Scanner;
 public class ReaderHelper {
 
     public static String readFile(String path){
+        System.out.printf("start read file: \n"+ path +"\n");
         return readFile(new File(path));
     }
 

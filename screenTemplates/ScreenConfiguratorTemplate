@@ -1,34 +1,40 @@
 {
-	"classNameTemplate": "[[screenName]]ScreenConfigurator.java",
+	"classNameTemplate": "[[configuratorName]].java",
 	"codeTemplate": 
-		"package com.agna.realmvp.realmvpsample.ui.screen.[[screenPackgeName]];
+		"package ru.avs.express.android.ui.screen.[[screenPackageName]];
 
 
 		import android.content.Context;
 		import android.os.Bundle;
+		import android.content.Intent;
 
-		import com.agna.ferro.core.PersistentScreenScope;
-		import com.agna.ferro.mvp.component.ScreenComponent;
-		import com.agna.ferro.mvp.component.scope.PerScreen;
-		import com.agna.realmvp.realmvpsample.app.AppComponent;
-		import com.agna.realmvp.realmvpsample.ui.base.screen.configurator.[[screenTypeName]]ScreenConfigurator;
-		import com.agna.realmvp.realmvpsample.ui.base.dagger.CustomScreenModule;
-		import com.agna.realmvp.realmvpsample.ui.base.dagger.[[screenTypeName]]ScreenModule;
+		import ru.avs.express.android.app.dagger.AppComponent;
+		import ru.avs.express.android.app.dagger.scope.PerScreen;
+		import ru.avs.express.android.ui.base.dagger.ActivityScreenModule;
+		import ru.avs.express.android.ui.base.dagger.CustomScreenModule;
+		import ru.avs.express.android.ui.base.screen.configurator.ActivityScreenConfigurator;
+		import ru.avs.express.android.ui.base.screen.view.ScreenComponent;
+		import ru.avs.express.android.ui.base.dagger.FragmentScreenModule;
+        import ru.avs.express.android.ui.base.screen.configurator.FragmentScreenConfigurator;
 
 		import dagger.Component;
 		import dagger.Module;
 
-		public class [[screenName]]ScreenConfigurator extends [[screenTypeName]]ScreenConfigurator {
+		/**
+		* Конфигуратор экрана [[humanScreenName]]
+		*/
+		class [[configuratorName]] extends [[screenTypeName]]ScreenConfigurator {
 
 		    @PerScreen
 		    @Component(dependencies = AppComponent.class, modules = {[[screenTypeName]]ScreenModule.class[[screenModuleRegistration]]})
-		    interface [[screenName]]ScreenComponent extends ScreenComponent<[[screenName]][[screenTypeName]]View> {
-		    }
-
-		    public BookScreenConfigurator(Context context, PersistentScreenScope persistentScreenScope, [[rawScreenInputParameterType]] [[rawScreenInputParameterName]]) {
-		        super(context, persistentScreenScope, [[rawScreenInputParameterName]]);
+		    interface [[screenName]]ScreenComponent extends ScreenComponent<[[viewName]]> {
 		    }
 		    [[screenModule]]
+
+		    public [[configuratorName]](Context context, [[rawScreenInputParameterType]] [[rawScreenInputParameterName]]) {
+		        super(context, [[rawScreenInputParameterName]]);
+		    }
+
 		    @Override
 		    protected ScreenComponent createScreenComponent(AppComponent appComponent,
 		                                                    [[screenTypeName]]ScreenModule [[screenTypeNameLowerCase]]ScreenModule,
@@ -82,7 +88,7 @@
 					 	}
 					],
 					"value" : "
-                .[[screenNameLowerCase]]ScreenModule(new [[screenName]]ScreenModule(new [[screenName]][[screenTypeName]]Route([[rawScreenInputParameterName]])))"
+                .[[screenNameLowerCase]]ScreenModule(new [[screenName]]ScreenModule(new [[routeName]]([[rawScreenInputParameterName]])))"
 				}
 			]
 		},
@@ -100,8 +106,8 @@
 						"
 
 					    @Module
-					    public static class [[screenName]]ScreenModule extends CustomScreenModule<[[screenName]][[screenTypeName]]Route>{
-					        public [[screenName]]ScreenModule([[screenName]][[screenTypeName]]Route route) {
+					    public static class [[screenName]]ScreenModule extends CustomScreenModule<[[routeName]]>{
+					        public [[screenName]]ScreenModule([[routeName]] route) {
 					            super(route);
 					        }
 					    }"

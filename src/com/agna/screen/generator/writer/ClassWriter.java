@@ -17,13 +17,23 @@ public class ClassWriter {
     }
 
     private void write(ClassFile classFile) {
-        File file = new File(classFile.getPath() + "\\" + classFile.getName());
-        file.getParentFile().mkdir();
+        File folder = new File(classFile.getPath());
+        generateRecursive(folder);
+        File file = new File(folder, classFile.getName());
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(file), "utf-8"))) {
             writer.write(classFile.getCode());
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private void generateRecursive(File folder) {
+        if(folder.getParentFile() != null) {
+            generateRecursive(folder.getParentFile());
+            folder.mkdir();
+        } else {
+            folder.mkdir();
         }
     }
 }

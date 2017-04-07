@@ -1,0 +1,635 @@
+{
+	"classNameTemplate": "[[routeName]].java",
+	"codeTemplate": 
+"package ru.avs.express.android.ui.screen.[[screenPackageName]];
+
+import android.content.Context;
+import android.content.Intent;
+import android.support.v4.app.Fragment;
+
+import lombok.Data;
+import ru.avs.express.android.domain.Unit;
+import ru.avs.express.android.ui.base.navigation.activity.route.ActivityWithParamsAndResultRoute;
+import ru.avs.express.android.ui.base.navigation.activity.route.ActivityWithParamsRoute;
+import ru.avs.express.android.ui.base.navigation.activity.route.ActivityWithResultRoute;
+import ru.avs.express.android.ui.base.navigation.activity.route.ActivityRoute;
+import ru.avs.express.android.ui.base.navigation.fragment.route.FragmentWithParamsRoute;
+import ru.avs.express.android.ui.base.navigation.fragment.route.FragmentRoute;
+
+/**
+* Маршрут экрана [[humanScreenName]]
+*/
+@Data
+public class [[routeName]] extends [[routeBaseClass]] {
+
+    [[inputParamsFieldsBlock]][[constructorWithStartParams]][[getFragmentClassMethod]][[constructorWithRawInputParam]][[prepareStartParams]]
+}",
+
+
+
+	"parts" : [
+		{
+			"name": "routeBaseClass",
+			"values": [
+				{
+					"cfg" : [
+                        {
+                            "key" : "hasResult",
+                            "value" : "true"
+                        },
+                        {
+                            "key" : "hasInputParams",
+                            "value" : "true"
+                        },
+                        {
+                            "key" : "screenType",
+                            "value" : "activity"
+                        }
+
+					],
+					"value" : "[[screenTypeName]]WithParamsAndResultRoute<[[resultType]]>"
+				},
+				{
+                    "cfg" : [
+                        {
+                            "key" : "hasResult",
+                            "value" : "false"
+                        },
+                        {
+                            "key" : "hasInputParams",
+                            "value" : "true"
+                        }
+
+                    ],
+                    "value" : "[[screenTypeName]]WithParamsRoute"
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "hasResult",
+                            "value" : "true"
+                        },
+                        {
+                            "key" : "hasInputParams",
+                            "value" : "false"
+                        },
+                        {
+                            "key" : "screenType",
+                            "value" : "activity"
+                        }
+                    ],
+                    "value" : "[[screenTypeName]]WithResultRoute<[[resultType]]>"
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "hasResult",
+                            "value" : "false"
+                        },
+                        {
+                            "key" : "hasInputParams",
+                            "value" : "false"
+                        }
+
+                    ],
+                    "value" : "[[screenTypeName]]Route"
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "screenType",
+                            "value" : "fragment"
+                        },
+                        {
+                            "key" : "hasInputParams",
+                            "value" : "false"
+                        }
+                    ],
+                    "value" : "[[screenTypeName]]Route"
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "screenType",
+                            "value" : "dialog"
+                        },
+                        {
+                            "key" : "hasInputParams",
+                            "value" : "false"
+                        }
+
+                    ],
+                    "value" : "[[screenTypeName]]Route"
+                  }
+			]
+		},
+        {
+            "name": "constructorWithStartParams",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "hasInputParams",
+                            "value" : "true"
+                        }
+
+                    ],
+                    "value" :
+"public [[screenName]]Route([[inputParamsConstructorArgs]]) {
+        [[saveConstructorArgs]]
+    }
+
+    "
+                },
+                {
+                "value" :
+"public [[screenName]]Route() {
+    }
+
+    "
+                }
+            ]
+        },
+		{
+            "name": "constructorWithRawInputParam",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "hasInputParams",
+                            "value" : "true"
+                        }
+
+                    ],
+                    "value" :
+"public [[screenName]]Route([[rawScreenInputParameterType]] [[rawScreenInputParameterName]]) {
+        [[parseRawInputParameter]]
+    }
+
+    "
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "hasInputParams",
+                            "value" : "false"
+                        }
+
+                    ],
+                    "value" : ""
+                }
+            ]
+        },
+        {
+            "name": "inputParamsFieldsBlock",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "hasInputParams",
+                            "value" : "true"
+                        }
+
+                    ],
+                    "value" :
+"[[inputParamsFields]]
+
+    "
+                },
+                {
+                    "value": ""
+                }
+            ]
+        },
+		{
+            "name": "inputParamsFields",
+            "parametersSetName":"inputScreenParams",
+            "values": [
+                {
+                    "value" :
+"private [[parameterType]] [[parameterNameLowerCase]];[[parameterLineEnd]]    "
+                }
+            ]
+        },
+        {
+            "name": "inputParamsConstructorArgs",
+            "parametersSetName":"inputScreenParams",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "lastParameter",
+                            "value" : "false"
+                        }
+                    ],
+                    "value" : "[[parameterType]] [[parameterNameLowerCase]], "
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "lastParameter",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" : "[[parameterType]] [[parameterNameLowerCase]]"
+                }
+            ]
+        },
+        {
+            "name": "saveConstructorArgs",
+            "parametersSetName":"inputScreenParams",
+            "values": [
+                {
+                    "value" :
+"this.[[parameterNameLowerCase]] = [[parameterNameLowerCase]];[[parameterLineEnd]]        "
+                }
+            ]
+        },
+        {
+            "name": "extraConstant",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "parameterPosition",
+                            "value" : "0"
+                        }
+                    ],
+                    "value" : "EXTRA_FIRST"
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "parameterPosition",
+                            "value" : "1"
+                        }
+                    ],
+                    "value" : "EXTRA_SECOND"
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "parameterPosition",
+                            "value" : "2"
+                        }
+                    ],
+                    "value" : "EXTRA_THIRD"
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "parameterPosition",
+                            "value" : "3"
+                        }
+                    ],
+                    "value" : "EXTRA_FOURTH"
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "parameterPosition",
+                            "value" : "4"
+                        }
+                    ],
+                    "value" : "EXTRA_FIFTH"
+                }
+            ]
+        },
+        {
+            "name": "parseRawInputParamExtraPostfix",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "screenType",
+                            "value" : "activity"
+                        }
+                    ],
+                    "value" : "Extra"
+                },
+                {
+                    "value" : ""
+                }
+            ]
+        },
+        {
+            "name": "getFragmentClassMethod",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "screenType",
+                            "value" : "activity"
+                        }
+                    ],
+                    "value" : ""
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "screenType",
+                            "value" : "fragment"
+                        }
+                    ],
+                    "value" :
+"@Override
+    protected Class<? extends Fragment> getFragmentClass() {
+        return [[viewName]].class;
+    }
+
+    "
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "screenType",
+                            "value" : "fragment"
+                        }
+                    ],
+                    "value" :
+"@Override
+    protected Class<? extends DialogFragment> getFragmentClass() {
+        return [[viewName]].class;
+    }
+
+    "
+                }
+            ]
+        },
+        {
+            "name": "prepareStartParams",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "screenType",
+                            "value" : "activity"
+                        },
+                        {
+                            "key" : "hasInputParams",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"@Override
+    public Intent prepareIntent(Context context) {
+        Intent intent = new Intent(context, [[viewName]].class);
+        [[putStartParams]]
+        return intent;
+    }
+
+    "
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "screenType",
+                            "value" : "fragment"
+                        },
+                        {
+                            "key" : "hasInputParams",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"@Override
+    protected Bundle prepareBundle() {
+        Bundle args = new Bundle();
+        [[putStartParams]]
+        return args;
+    }
+
+    "
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "screenType",
+                            "value" : "dialog"
+                        },
+                        {
+                            "key" : "hasInputParams",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"@Override
+    protected Bundle prepareBundle() {
+        Bundle args = new Bundle();
+        [[putStartParams]]
+        return args;
+    }
+
+    "
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "screenType",
+                            "value" : "activity"
+                        },
+                        {
+                            "key" : "hasInputParams",
+                            "value" : "false"
+                        }
+                    ],
+                    "value" :
+"@Override
+    public Intent prepareIntent(Context context) {
+        Intent intent = new Intent(context, [[viewName]].class);
+        return intent;
+    }
+
+    "
+                },
+                {
+                    "value" : ""
+                }
+            ]
+        },
+        {
+            "name": "putStartParams",
+            "parametersSetName":"inputScreenParams",
+            "values": [
+                {
+                    "value" :
+"[[rawScreenInputParameterName]].put[[putStartParamsPutMethodPostfix]]([[extraConstant]], [[parameterNameLowerCase]]);[[parameterLineEnd]]        "
+                }
+            ]
+        },
+        {
+            "name": "putStartParamsPutMethodPostfix",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "screenType",
+                            "value" : "activity"
+                        }
+                    ],
+                    "value" : "Extra"
+                },
+                {
+                    "value" : "[[parameterTypeCapitalized]]"
+                }
+            ]
+        },
+        {
+            "name": "parseRawInputParameter",
+            "parametersSetName":"inputScreenParams",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "parameterType",
+                            "value" : "Integer"
+                        }
+                    ],
+                    "value" :
+"[[parameterNameLowerCase]] = [[rawScreenInputParameterName]].getInt[[parseRawInputParamExtraPostfix]]([[extraConstant]], 0);[[parameterLineEnd]]        "
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "parameterType",
+                            "value" : "int"
+                        }
+                    ],
+                    "value" :
+"[[parameterNameLowerCase]] = [[rawScreenInputParameterName]].getInt[[parseRawInputParamExtraPostfix]]([[extraConstant]], 0);
+        "
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "parameterType",
+                            "value" : "Boolean"
+                        }
+                    ],
+                    "value" :
+"[[parameterNameLowerCase]] = [[rawScreenInputParameterName]].getBoolean[[parseRawInputParamExtraPostfix]]([[extraConstant]], false);
+        "
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "parameterType",
+                            "value" : "boolean"
+                        }
+                    ],
+                    "value" :
+"[[parameterNameLowerCase]] = [[rawScreenInputParameterName]].getBoolean[[parseRawInputParamExtraPostfix]]([[extraConstant]], false);
+        "
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "parameterType",
+                            "value" : "Long"
+                        }
+                    ],
+                    "value" :
+"[[parameterNameLowerCase]] = [[rawScreenInputParameterName]].getLong[[parseRawInputParamExtraPostfix]]([[extraConstant]], 0);
+        "
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "parameterType",
+                            "value" : "long"
+                        }
+                    ],
+                    "value" :
+"[[parameterNameLowerCase]] = [[rawScreenInputParameterName]].getLong[[parseRawInputParamExtraPostfix]]([[extraConstant]], 0);
+        "
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "parameterType",
+                            "value" : "Float"
+                        }
+                    ],
+                    "value" :
+"[[parameterNameLowerCase]] = [[rawScreenInputParameterName]].getFloat[[parseRawInputParamExtraPostfix]]([[extraConstant]], 0);
+        "
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "parameterType",
+                            "value" : "float"
+                        }
+                    ],
+                    "value" :
+"[[parameterNameLowerCase]] = [[rawScreenInputParameterName]].getFloat[[parseRawInputParamExtraPostfix]]([[extraConstant]], 0);
+        "
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "parameterType",
+                            "value" : "Double"
+                        }
+                    ],
+                    "value" :
+"[[parameterNameLowerCase]] = [[rawScreenInputParameterName]].getDouble[[parseRawInputParamExtraPostfix]]([[extraConstant]], 0);
+        "
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "parameterType",
+                            "value" : "double"
+                        }
+                    ],
+                    "value" :
+"[[parameterNameLowerCase]] = [[rawScreenInputParameterName]].getDouble[[parseRawInputParamExtraPostfix]]([[extraConstant]], 0);
+        "
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "parameterType",
+                            "value" : "String"
+                        }
+                    ],
+                    "value" :
+"[[parameterNameLowerCase]] = [[rawScreenInputParameterName]].getString[[parseRawInputParamExtraPostfix]]([[extraConstant]]);
+        "
+                },
+                {
+                    "value" :
+"[[parameterNameLowerCase]] = ([[parameterType]])[[rawScreenInputParameterName]].getSerializable[[parseRawInputParamExtraPostfix]]([[extraConstant]]);
+        "
+                }
+            ]
+        },
+        {
+            "name": "parameterLineEnd",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "lastParameter",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :""
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "lastParameter",
+                            "value" : "false"
+                        }
+                    ],
+                    "value" :
+"
+"
+                }
+             ]
+         }
+
+	]
+}

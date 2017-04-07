@@ -1,0 +1,502 @@
+{
+	"classNameTemplate": "[[adapterName]].java",
+	"cfg" : [
+        {
+            "key" : "hasRecyclerView",
+            "value" : "true"
+        }
+    ],
+	"codeTemplate": 
+"package ru.avs.express.android.ui.screen.[[screenPackageName]];
+
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.view.ViewGroup;
+
+import ru.avs.express.android.ui.base.recycler.BaseAdapter;
+import lombok.Data;
+import ru.avs.express.android.domain.Unit;
+import ru.avs.express.android.ui.base.recycler.BindableViewHolder;
+import ru.avs.express.android.ui.base.recycler.PaginationableAdapter;
+import ru.avs.express.android.ui.base.recycler.changes.Range;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+* Адаптер экрана [[humanScreenName]]
+*/
+public class [[adapterName]] extends [[adapterBaseClass]] {
+
+    [[dataField]]
+    private [[itemListenerType]] [[itemListenerName]];
+
+    [[headerListenerField]][[itemListenerInterface]][[headerListenerInterface]]
+    public void set[[itemListenerType]]([[itemListenerType]] [[itemListenerName]]) {
+        this.[[itemListenerName]] = [[itemListenerName]];
+    }
+
+    [[headerListenerSetter]][[dataSetter]][[getExtraItemsRangeMethod]][[onCreateViewHolderMethod]]
+    [[onBindViewHolderMethod]]
+    [[isHeaderPositionMethod]]
+    private int getDataPosition(int position) {
+        return position - getHeaderCount();
+    }
+
+    private int getHeaderCount(){
+        return [[headerCount]];
+    }
+
+    [[getItemCountMethod]]
+    [[getItemViewTypeMethod]]
+    [[itemViewHolder]]
+    [[headerViewHolder]]
+}",
+
+
+
+	"parts" : [
+		{
+			"name": "adapterBaseClass",
+			"values": [
+				{
+					"cfg" : [
+                        {
+                            "key" : "pgn",
+                            "value" : "true"
+                        }
+					],
+					"value" : "PaginationableAdapter"
+				},
+				{
+                    "value" : "BaseAdapter"
+                }
+            ]
+        },
+        {
+            "name": "itemListenerName",
+            "parametersSetName" : "recyclerItemParam",
+            "values": [
+                {
+                    "value" : "on[[parameterNameCapitalized]]ActionListener"
+                }
+            ]
+        },
+        {
+            "name": "adapterMethodModificator",
+            "parametersSetName" : "recyclerItemParam",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "pgn",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" : "protected"
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "pgn",
+                            "value" : "false"
+                        }
+                    ],
+                    "value" : "public"
+                }
+            ]
+        },
+        {
+            "name": "custom",
+            "parametersSetName" : "recyclerItemParam",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "pgn",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" : "Custom"
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "pgn",
+                            "value" : "false"
+                        }
+                    ],
+                    "value" : ""
+                }
+            ]
+        },
+        {
+            "name": "itemViewHolder",
+            "parametersSetName" : "recyclerItemParam",
+            "values": [
+                {
+                    "value" :
+"private static class [[itemViewHolderName]] extends BindableViewHolder<[[parameterType]]> {
+
+        private [[parameterType]] [[parameterNameLowerCase]];
+
+        public static [[itemViewHolderName]] newInstance(ViewGroup parent, [[itemListenerType]] itemActionListener) {
+            //View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.[[parameterNameLowerCase]]_list_item_layout, parent, false);
+            //return new UnitViewHolder(view, itemActionListener); todo create list item layout
+            return null;
+        }
+
+        public [[itemViewHolderName]](View itemView, [[itemListenerType]] clickListener) {
+            super(itemView);
+            itemView.setOnClickListener(v -> clickListener.onItemClick([[parameterNameLowerCase]]));
+            //todo find views here
+        }
+
+        @Override
+        public void bind([[parameterType]] [[parameterNameLowerCase]]) {
+            this.[[parameterNameLowerCase]] = [[parameterNameLowerCase]];
+            //todo render units here
+        }
+    }
+    "
+                }
+            ]
+        },
+        {
+            "name": "headerViewHolder",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "recyclerViewWithHeader",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"private static class [[headerViewHolderName]] extends BindableViewHolder<[[screenModelName]]> {
+
+        [[screenModelName]] screenModel;
+
+        public static [[headerViewHolderName]] newInstance(ViewGroup parent, OnHeaderActionListener headerActionListener) {
+            //View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.[[screenNameLowerCase]]_header_layout, parent, false);
+            //return new [[headerViewHolderName]](view, headerActionListener); todo create header layout
+            return null;
+        }
+
+        public [[headerViewHolderName]](View itemView, OnHeaderActionListener headerActionListener) {
+            super(itemView);
+            //todo find views and init listeners here
+        }
+
+        @Override
+        public void bind([[screenModelName]] screenModel) {
+            this.screenModel = screenModel;
+            //todo render data here
+        }
+    }"
+                }
+            ]
+        },
+        {
+            "name": "headerCount",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "recyclerViewWithHeader",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" : "1"
+                },
+                {
+                    "value" : "0"
+                }
+            ]
+        },
+        {
+            "name": "itemViewHolderName",
+            "parametersSetName" : "recyclerItemParam",
+            "values": [
+                {
+                    "value" : "[[parameterNameCapitalized]]ViewHolder"
+                }
+            ]
+        },
+        {
+            "name": "headerViewHolderName",
+            "values": [
+                {
+                    "value" : "[[screenName]]HeaderViewHolder"
+                }
+            ]
+        },
+        {
+            "name": "getItemViewTypeMethod",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "recyclerViewWithHeader",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"@Override
+    [[adapterMethodModificator]] int get[[custom]]ItemViewType(int position) {
+        return isHeaderPosition(position) ? FIRST_HEADER_VIEW_TYPE : LIST_ITEM_VIEW_TYPE;
+    }
+    "
+                },
+                {
+                    "value" :""
+                }
+            ]
+        },
+        {
+            "name": "getItemCountMethod",
+            "parametersSetName" : "recyclerListItemsParam",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "recyclerViewWithHeader",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"@Override
+    [[adapterMethodModificator]] int get[[custom]]ItemCount() {
+        return screenModel == null ? 0 : screenModel.[[recyclerListItemsGetter]].size() + getHeaderCount();
+    }
+    "
+                },
+                {
+                    "value" :
+"@Override
+    [[adapterMethodModificator]] int get[[custom]]ItemCount() {
+        return [[parameterNameLowerCase]].size();
+    }
+    "
+                }
+            ]
+        },
+        {
+            "name": "isHeaderPositionMethod",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "recyclerViewWithHeader",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"private boolean isHeaderPosition(int position) {
+        return position == 0;
+    }
+     "
+                },
+                {
+                    "value" : ""
+                }
+            ]
+        },
+        {
+            "name": "onBindViewHolderMethod",
+            "parametersSetName" : "recyclerListItemsParam",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "recyclerViewWithHeader",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"@Override
+    [[adapterMethodModificator]] void onBind[[custom]]ViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (isHeaderPosition(position)) {
+            (([[headerViewHolderName]]) holder).bind(screenModel);
+        } else {
+            (([[itemViewHolderName]]) holder).bind(screenModel.[[recyclerListItemsGetter]].get(getDataPosition(position)));
+        }
+    }
+    "
+                },
+                {
+                    "value" :
+"@Override
+    [[adapterMethodModificator]] void onBind[[custom]]ViewHolder(RecyclerView.ViewHolder holder, int position) {
+        (([[itemViewHolderName]]) holder).bind([[parameterNameLowerCase]].get(getDataPosition(position)));
+    }
+    "
+                }
+            ]
+        },
+        {
+            "name": "onCreateViewHolderMethod",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "recyclerViewWithHeader",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"@Override
+    [[adapterMethodModificator]] RecyclerView.ViewHolder onCreate[[custom]]ViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == FIRST_HEADER_VIEW_TYPE) {
+            return [[headerViewHolderName]].newInstance(parent, onHeaderActionListener);
+        } else if (viewType == LIST_ITEM_VIEW_TYPE) {
+            return [[itemViewHolderName]].newInstance(parent, [[itemListenerName]]);
+        } else {
+            throw new IllegalStateException(\"unsupported ViewType: \"+ viewType);
+        }
+    }
+    "
+                },
+                {
+                    "value" :
+"@Override
+    [[adapterMethodModificator]] RecyclerView.ViewHolder onCreate[[custom]]ViewHolder(ViewGroup parent, int viewType) {
+        return [[itemViewHolderName]].newInstance(parent, [[itemListenerName]]);
+    }
+    "
+                }
+            ]
+        },
+        {
+            "name": "getExtraItemsRangeMethod",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "recyclerViewWithHeader",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"@Override
+    protected Range getExtraItemsRange() {
+        return new Range(0, getHeaderCount());
+    }
+
+    "
+                }
+            ]
+        },
+        {
+            "name": "dataSetter",
+            "parametersSetName" : "recyclerListItemsParam",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "recyclerViewWithHeader",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"public void setData([[screenModelName]] screenModel) {
+        this.screenModel = screenModel;
+    }
+
+    "
+                },
+                {
+                    "value" :
+"public void setData(List<[[parameterType]]> [[parameterNameLowerCase]]) {
+        this.[[parameterNameLowerCase]] = [[parameterNameLowerCase]];
+    }
+
+    "
+                }
+            ]
+        },
+        {
+            "name": "headerListenerSetter",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "recyclerViewWithHeader",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"public void setOnHeaderActionListener(OnHeaderActionListener onHeaderActionListener) {
+        this.onHeaderActionListener = onHeaderActionListener;
+    }
+
+    "
+                }
+            ]
+        },
+        {
+            "name": "headerListenerInterface",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "recyclerViewWithHeader",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"public interface OnHeaderActionListener {
+    }
+    "
+                }
+            ]
+        },
+        {
+            "name": "itemListenerInterface",
+            "parametersSetName" : "recyclerItemParam",
+            "values": [
+                {
+                    "value" :
+"public interface [[itemListenerType]] {
+        void onItemClick([[parameterType]] [[parameterNameLowerCase]]);
+    }
+
+    "
+                }
+            ]
+        },
+        {
+            "name": "headerListenerField",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "recyclerViewWithHeader",
+                            "value" : "true"
+                        }
+                    ],
+"value" : "private OnHeaderActionListener onHeaderActionListener;
+
+    "
+                }
+            ]
+        },
+        {
+            "name": "dataField",
+            "parametersSetName" : "recyclerListItemsParam",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "recyclerViewWithHeader",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" : "private [[screenModelName]] screenModel;"
+                },
+                {
+                    "value" : "private List<[[parameterType]]> [[parameterNameLowerCase]] = new ArrayList<>();"
+                }
+            ]
+        }
+	]
+}

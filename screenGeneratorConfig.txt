@@ -2,108 +2,158 @@
 	"cfg" : [
 		{
 			"key" : "screenType",
-		 	"value" : "fragment",
-		 	"_comment": "value activity or fragment"
+		 	"value" : "activity",
+		 	"_comment": "тип экрана (activity/fragment)"
 		},
 		{
-			"key" : "hasInputParams",
+			"key" : "renderable",
 		 	"value" : "true",
-		 	"_comment": "value false or true"
-		},
-		{
-			"key" : "hasResult",
-		 	"value" : "true",
-		 	"_comment": "value false or true"
-		},
-		{
-			"key" : "rendarable",
-		 	"value" : "true",
-		 	"_comment": "value false or true" 
+		 	"_comment": "экран умеет отрисовывать модель (false/true)"
 		},
 		{
 			"key" : "lds",
 		 	"value" : "true",
-		 	"_comment": "value false or true"
+		 	"_comment": "экран имеет плейсхолдер (false/true)"
 		},
 		{
 			"key" : "swr",
 		 	"value" : "true",
-		 	"_comment": "value false or true"
+		 	"_comment": "экран имеет SwipeRefreshLayout (false/true)"
 		},
 		{
 			"key" : "pgn",
 		 	"value" : "true",
-		 	"_comment": "value false or true"
-		}
-
+		 	"_comment": "экран имеет пагинацию (false/true)"
+		},
+		{
+            "key" : "hasInputParams",
+            "value" : "true",
+            "_comment": "экран имеет входные параметры (false/true)"
+        },
+        {
+            "key" : "hasResult",
+            "value" : "true",
+            "_comment": "экран возвращает результат (false/true), работает только с активити"
+        },
+        {
+            "key" : "hasRecyclerView",
+            "value" : "true",
+            "_comment": "экран имеет RecyclerView (false/true)"
+        },
+        {
+            "key" : "recyclerViewWithHeader",
+            "value" : "true",
+            "_comment": "RecyclerView имеет хедер (false/true)"
+        },
+        {
+            "key" : "hasToolbar",
+            "value" : "true",
+            "_comment": "экран имеет Toolbar (false/true)"
+        }
 	],
 
 	"parametersSets" : [
 		{
 			"name": "inputScreenParams",
+			"_comment": "входные параметры экрана",
 			"parameters" : [
 				{
 					"type": "String",
 					"name": "bookId"
 				},
 				{
-					"type": "Filter",
-					"name": "filter"
+					"type": "Unit",
+					"name": "unit"
 				}
 
 			]
 		},
 		{
-			"name": "resultScreenParams",
-			"parameters" : [
-				{
-					"type": "Boolean",
-					"name": "success"
-				}
-			]
-		}
+            "name": "recyclerItemParam",
+            "_comment": "тип и имя данных для элемента списка RecyclerView",
+            "parameters" : [
+                {
+                    "type": "Unit",
+                    "name": "unit"
+                }
+            ]
+        },
+        {
+            "name": "recyclerListItemsParam",
+            "_comment": "тип и имя данных для всего списка RecyclerView",
+            "parameters" : [
+                {
+                    "type": "Unit",
+                    "name": "units",
+                    "_comment": "type - generic тип для списка"
+                }
+            ]
+        }
 	],
 
 	"globalParts" : [
 		{
 			"name": "screenPackageName",
+			"_comment": "имя пакета экрана",
 			"values": [
 				{
-					"value" : "screenPackageName"
+					"value" : "test"
 				}
 			]
 		},
 		{
 			"name": "screenName",
+			"_comment": "имя экрана с большой буквы",
 			"values": [
 				{
-					"value" : "screenName" 
+					"value" : "Test"
 				}
 			]
 		},
 		{
 			"name": "screenNameLowerCase",
+			"_comment": "имя экрана с маленькой буквы",
 			"values": [
 				{
-					"value" : "screenNameLowerCase" 
+					"value" : "test"
 				}
 			]
 		},
 		{
 			"name": "humanScreenName",
+			"_comment": "имя экрана в родительном падеже, используется для комментариев",
 			"values": [
 				{
-					"value" : "humanScreenName" 
+					"value" : "списка продуктов"
 				}
 			]
 		},
 		{
 			"name": "layoutScreenName",
+			"_comment": "id layout ресурса экрана, например activity_main",
 			"values": [
 				{
-					"value" : "[[screenNameLowerCase]]"
+					"value" : "[[screenTypeNameLowerCase]]_[[screenNameLowerCase]]"
 				}
 			]
-		}
+		},
+		{
+            "name": "resultType",
+            "_comment": "тип обьекта, возвращаемого в качестве результата экрана, работате только с активити",
+            "values": [
+                {
+                    "value" : "Unit"
+                }
+            ]
+        },
+        {
+            "name": "adapterName",
+            "_comment": "название адаптера для RecyclerView",
+            "values" : [
+                {
+                    "value" : "[[screenName]]Adapter"
+                }
+            ]
+        }
 	]
 }

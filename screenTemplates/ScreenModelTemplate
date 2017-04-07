@@ -1,0 +1,116 @@
+{
+	"classNameTemplate": "[[screenModelName]].java",
+	"cfg" : [
+        {
+            "key" : "renderable",
+            "value" : "true"
+        }
+    ],
+	"codeTemplate": 
+"package ru.avs.express.android.ui.screen.[[screenPackageName]];
+
+import lombok.Data;
+import ru.avs.express.android.domain.Unit;
+import ru.avs.express.android.domain.datalist.DataList;
+import ru.avs.express.android.ui.base.screen.model.LdsSwrPgnScreenModel;
+import ru.avs.express.android.ui.base.screen.model.LdsScreenModel;
+import ru.avs.express.android.ui.base.screen.model.LdsSwrScreenModel;
+import ru.avs.express.android.ui.base.screen.model.ScreenModel;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+* Основная модель экрана [[humanScreenName]]
+*/
+@Data
+public class [[screenModelName]] extends [[modelBaseClass]] {
+
+    [[fields]]
+}",
+
+
+
+	"parts" : [
+		{
+			"name": "modelBaseClass",
+			"values": [
+				{
+					"cfg" : [
+                        {
+                            "key" : "pgn",
+                            "value" : "true"
+                        },
+                        {
+                            "key" : "swr",
+                            "value" : "true"
+                        },
+                        {
+                            "key" : "lds",
+                            "value" : "true"
+                        }
+
+					],
+					"value" : "LdsSwrPgnScreenModel"
+				},
+				{
+                    "cfg" : [
+                        {
+                            "key" : "swr",
+                            "value" : "true"
+                        },
+                        {
+                            "key" : "lds",
+                            "value" : "true"
+                        }
+
+                    ],
+                    "value" : "LdsSwrScreenModel"
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "lds",
+                            "value" : "true"
+                        }
+
+                    ],
+                    "value" : "LdsScreenModel"
+                },
+                {
+                    "value" : "ScreenModel"
+                }
+            ]
+        },
+        {
+            "name": "fields",
+            "parametersSetName" : "recyclerListItemsParam",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "pgn",
+                            "value" : "true"
+                        },
+                        {
+                            "key" : "hasRecyclerView",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" : "private DataList<[[parameterType]]> [[parameterNameLowerCase]] = DataList.empty();"
+                },
+                {
+                    "cfg" : [
+                        {
+                            "key" : "hasRecyclerView",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" : "private List<[[parameterType]]> [[parameterNameLowerCase]] = new ArrayList<>();"
+                },
+                {
+                    "value" : ""
+                }
+            ]
+        }
+	]
+}

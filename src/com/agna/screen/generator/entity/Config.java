@@ -13,6 +13,9 @@ public class Config {
         this.entries = entries;
     }
 
+    public Config() {
+    }
+
     public List<ConfigEntry> getEntries() {
         return entries;
     }

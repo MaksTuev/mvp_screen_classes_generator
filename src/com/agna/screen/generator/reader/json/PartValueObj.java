@@ -6,6 +6,7 @@ import com.agna.screen.generator.reader.json.transform.TransformUtil;
 import com.agna.screen.generator.reader.json.transform.Transformable;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public class PartValueObj implements Transformable<PartValue> {
     @SerializedName("cfg")
-    private List<ConfigEntryObj> config;
+    private List<ConfigEntryObj> config = new ArrayList<>();
     @SerializedName("value")
     private String value;
 

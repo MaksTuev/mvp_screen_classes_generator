@@ -1,0 +1,269 @@
+{
+	"classNameTemplate": "[[presenterName]].java",
+	"codeTemplate": 
+"package ru.avs.express.android.ui.screen.[[screenPackageName]];
+
+import lombok.Data;
+import ru.avs.express.android.ui.base.screen.model.state.LoadState;
+import ru.avs.express.android.ui.base.screen.presenter.BasePresenter;
+import ru.avs.express.android.ui.base.screen.presenter.BasePresenterDependency;
+
+import javax.inject.Inject;
+import ru.avs.express.android.app.dagger.scope.PerScreen;
+/**
+* Презентер экрана [[humanScreenName]]
+*/
+@PerScreen
+class [[presenterName]] extends BasePresenter<[[viewName]]> {
+
+    [[screenModelField]]
+
+    @Inject
+    public [[presenterName]]([[routeConstructorArg]]BasePresenterDependency basePresenterDependency) {
+        super(basePresenterDependency);
+        [[initScreenModel]]
+    }
+
+    @Override
+    public void onLoad(boolean viewRecreated) {
+        super.onLoad(viewRecreated);
+        [[tryLoadDataMethodInvoke]]
+    }
+
+    [[tryLoadDataMethod]][[loadDataMethod]][[loadMoreMethod]]
+}",
+
+
+
+	"parts" : [
+		{
+			"name": "screenModelField",
+			"values": [
+				{
+					"cfg" : [
+                        {
+                            "key" : "renderable",
+                            "value" : "true"
+                        }
+					],
+					"value" : "private [[screenModelName]] screenModel;"
+				},
+				{
+                    "value" : ""
+                }
+            ]
+        },
+        {
+            "name": "tryLoadDataMethod",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "lds",
+                            "value" : "true"
+                        },
+                        {
+                            "key" : "renderable",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"private void tryLoadData(boolean viewRecreated) {
+        if (viewRecreated) {
+            getView().render(screenModel);[[notifyAllChangedHard]]
+        } else {
+            screenModel.setLoadState(LoadState.MAIN_LOADING);
+            getView().render(screenModel);
+            loadData([[loadDataInitialParam]]);
+        }
+    }
+
+    "
+                },
+                {
+                    "value" : ""
+                }
+            ]
+        },
+        {
+            "name": "tryLoadDataMethodInvoke",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "lds",
+                            "value" : "true"
+                        },
+                        {
+                            "key" : "renderable",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" : "tryLoadData(viewRecreated);"
+                },
+                {
+                    "value" : ""
+                }
+            ]
+        },
+        {
+            "name": "loadMoreMethod",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "pgn",
+                            "value" : "true"
+                        },
+                        {
+                            "key" : "renderable",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"public void loadMore() {
+        loadData(screenModel.[[recyclerListItemsGetter]].getNextPage());
+    }
+    "
+                },
+                {
+                    "value" : ""
+                }
+            ]
+        },
+        {
+            "name": "loadDataMethod",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "lds",
+                            "value" : "true"
+                        },
+                        {
+                            "key" : "renderable",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"private void loadData([[loadDataParam]]) {
+        //example
+        /*subscribeIoHandleError(Observable.<DataList<Unit>>empty(), //todo make real query
+                dataList -> { //todo rename result
+                    DataListMergeChanges mergeChanges = screenModel.getUnits().merge(dataList);
+                    screenModel.setLoadState(screenModel.getUnits().isEmpty()
+                            ? LoadState.EMPTY
+                            : LoadState.NONE);
+                    screenModel.setNormalPaginationState(screenModel.getUnits().canGetMore());
+                    getView().render(screenModel);
+                    getView().notifyListChanged(ListChanges.newInstance(mergeChanges));
+                },
+                e -> {
+                    screenModel.setLoadState(screenModel.getUnits().isEmpty()
+                            ? LoadState.ERROR
+                            : LoadState.NONE);
+                    screenModel.setErrorPaginationState();
+                    getView().render(screenModel);
+                });*/
+    }
+
+    "
+                },
+                {
+                    "value" : ""
+                }
+            ]
+        },
+        {
+            "name": "loadDataInitialParam",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "pgn",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" : "0"
+                },
+                {
+                    "value" : ""
+                }
+            ]
+        },
+        {
+            "name": "loadDataParam",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "pgn",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" : "int page"
+                },
+                {
+                    "value" : ""
+                }
+            ]
+        },
+        {
+            "name": "notifyAllChangedHard",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "lds",
+                            "value" : "true"
+                        },
+                        {
+                            "key" : "hasRecycler",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" :
+"
+            getView().notifyListChanged(ListChanges.allChangedHard());"
+                },
+                {
+                    "value" : ""
+                }
+            ]
+        },
+        {
+            "name": "routeConstructorArg",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "hasInputParams",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" : "[[routeName]] route, "
+                },
+                {
+                    "value" : ""
+                }
+            ]
+        },
+        {
+            "name": "initScreenModel",
+            "values": [
+                {
+                    "cfg" : [
+                        {
+                            "key" : "renderable",
+                            "value" : "true"
+                        }
+                    ],
+                    "value" : "screenModel = new [[screenModelName]](); //todo init screen model here"
+                },
+                {
+                    "value" : ""
+                }
+            ]
+        }
+	]
+}

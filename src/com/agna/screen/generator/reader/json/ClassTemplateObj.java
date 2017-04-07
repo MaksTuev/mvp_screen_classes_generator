@@ -1,6 +1,7 @@
 package com.agna.screen.generator.reader.json;
 
 import com.agna.screen.generator.entity.ClassTemplate;
+import com.agna.screen.generator.entity.Config;
 import com.agna.screen.generator.reader.json.transform.TransformUtil;
 import com.agna.screen.generator.reader.json.transform.Transformable;
 import com.google.gson.annotations.SerializedName;
@@ -20,6 +21,8 @@ public class ClassTemplateObj implements Transformable<ClassTemplate> {
     private String codeTemplate;
     @SerializedName("parts")
     private List<PartObj> partObjs = new ArrayList<PartObj>();
+    @SerializedName("cfg")
+    private List<ConfigEntryObj> config = new ArrayList<>();
 
 
     @Override
@@ -27,6 +30,7 @@ public class ClassTemplateObj implements Transformable<ClassTemplate> {
         return new ClassTemplate(
                 classNameTemplate,
                 codeTemplate,
-                TransformUtil.transformCollection(partObjs));
+                TransformUtil.transformCollection(partObjs),
+                new Config(TransformUtil.transformCollection(config)));
     }
 }

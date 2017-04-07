@@ -12,10 +12,18 @@
 			"name": "pathToScreensPackage",
 			"values" : [
 				{
-					"value" : "/"
+					"value" : "app/src/main/java/ru/avs/express/android/ui/screen"
 				}
 			]
 		},
+		{
+            "name": "fullPathToFile",
+            "values" : [
+                {
+                    "value" : "[[pathToScreensPackage]]/[[screenPackageName]]"
+                }
+            ]
+        },
 		{
 			"name": "screenTypeName",
 
@@ -37,7 +45,16 @@
 					 	}
 					],
 					"value" : "Fragment"
-				}
+				},
+                {
+                    "cfg" : [
+                        {
+                            "key" : "screenType",
+                            "value" : "dialog"
+                        }
+                    ],
+                    "value" : "DialogFragment"
+                }
 			]
 		},
 		{
@@ -61,12 +78,20 @@
 					 	}
 					],
 					"value" : "fragment"
-				}
+				},
+				{
+                    "cfg" : [
+                        {
+                            "key" : "screenType",
+                            "value" : "dialog"
+                        }
+                    ],
+                    "value" : "dialogFragment"
+                }
 			]
 		},
 		{
 			"name": "rawScreenInputParameterType",
-
 			"values" : [
 				{
 					"cfg" : [
@@ -85,7 +110,16 @@
 					 	}
 					],
 					"value" : "Bundle"
-				}
+				},
+				{
+                    "cfg" : [
+                        {
+                            "key" : "screenType",
+                            "value" : "dialog"
+                        }
+                    ],
+                    "value" : "Bundle"
+                }
 			]
 		},
 		{
@@ -108,9 +142,76 @@
 					 	}
 					],
 					"value" : "args"
-				}
+				},
+                {
+                    "cfg" : [
+                        {
+                            "key" : "screenType",
+                            "value" : "dialog"
+                        }
+                    ],
+                    "value" : "args"
+                }
 			]
-		}
+		},
+		{
+            "name": "viewName",
+            "values" : [
+                {
+                    "value" : "[[screenName]][[screenTypeName]]View"
+                }
+            ]
+        },
+        {
+            "name": "presenterName",
+            "values" : [
+                {
+                    "value" : "[[screenName]]Presenter"
+                }
+            ]
+        },
+        {
+            "name": "screenModelName",
+            "values" : [
+                {
+                    "value" : "[[screenName]]ScreenModel"
+                }
+            ]
+        },
+        {
+            "name": "routeName",
+            "values" : [
+             {
+                 "value" : "[[screenName]]Route"
+             }
+            ]
+        },
+        {
+            "name": "configuratorName",
+            "values" : [
+                {
+                    "value" : "[[screenName]]ScreenConfigurator"
+                }
+            ]
+        },
+        {
+            "name": "recyclerListItemsGetter",
+            "parametersSetName":"recyclerListItemsParam",
+            "values" : [
+                {
+                    "value" : "get[[parameterNameCapitalized]]()"
+                }
+            ]
+        },
+        {
+            "name": "itemListenerType",
+            "parametersSetName" : "recyclerItemParam",
+            "values": [
+                {
+                    "value" : "On[[parameterNameCapitalized]]ActionListener"
+                }
+            ]
+        }
 
 	]
 }

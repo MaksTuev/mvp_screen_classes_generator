@@ -13,15 +13,17 @@ public class Generator {
     
     public static final String PART_APPLYING_FORMAT = "[[%s]]";
     public static final String PART_APPLYING_FORMAT_REGEX = "\\[\\[%s\\]\\]";
-    private static final String CLASS_PATH_TEMPLATE = "[[pathToScreensPackage]]/[[screenPackageName]]";
+    private static final String CLASS_PATH_TEMPLATE = "[[fullPathToFile]]";
 
     public List<ClassFile> generate(FullConfiguration fullConfiguration){
         return fullConfiguration.getClassTemplates().stream()
-                .map(classTemplate-> generateClass(classTemplate, fullConfiguration.getGeneratorConfig()))
+                .filter(classTemplate -> classTemplate.getConfig().correspondsTo(fullConfiguration.getGeneratorConfig().getConfig()))
+                .map(classTemplate -> generateClass(classTemplate, fullConfiguration.getGeneratorConfig()))
                 .collect(Collectors.toList());
     }
 
     private ClassFile generateClass(ClassTemplate classTemplate, GeneratorConfig generatorConfig) {
+        System.out.printf("start generate Class: "+ classTemplate.getClassNameTemplate()+"\n");
         List<Part> allParts = new ArrayList<>();
         allParts.addAll(classTemplate.getParts());
         allParts.addAll(generatorConfig.getGlobalParts());
@@ -40,6 +42,7 @@ public class Generator {
                 allParts,
                 generatorConfig.getConfig());
 
+        System.out.printf("end generate Class: "+ classTemplate.getClassNameTemplate()+"\n");
         return new ClassFile(className, path, code);
     }
 
@@ -54,11 +57,7 @@ public class Generator {
             String partApplying = String.format(PART_APPLYING_FORMAT, part.getName());
             if(template.contains(partApplying)){
                 String partValue = getPartValue(part, contextParts, contextConfig, parametersSets);
-                System.out.printf("part name:"+ part.getName()+"\n");
-                System.out.printf("part value:"+ partValue+"\n");
-                System.out.printf("before apply result:"+ result+"\n");
                 result = result.replaceAll(String.format(PART_APPLYING_FORMAT_REGEX, part.getName()), partValue);
-                System.out.printf("apply result:"+ result+"\n");
             }
         }
         return result;
@@ -71,10 +70,11 @@ public class Generator {
                     .filter(set -> set.getName().equals(part.getParametersSetName()))
                     .findFirst()
                     .get(); //todo handle error
-            for(int i = 0; i < parametersSet.getParameters().size(); i++) {
-                Parameter parameter = parametersSet.getParameters().get(i);
-                List<Part> newContextParts = PartListUtil.mergeParts(contextParts, parameter.generateParameterParts());
-                Config newContextConfig = contextConfig.merge(parameter.generateParameterConfig(i));
+            ArrayList<Parameter> parameters = parametersSet.getParameters();
+            for(int i = 0; i < parameters.size(); i++) {
+                Parameter parameter = parameters.get(i);
+                List<Part> newContextParts = PartListUtil.mergeParts(parameter.generateParameterParts(), contextParts);
+                Config newContextConfig = contextConfig.merge(parameter.generateParameterConfig(i, parameters.size()));
                 value += generateText(part.getSuitablePartValue(newContextConfig), newContextParts, newContextConfig, parametersSets);
             }
         } else {

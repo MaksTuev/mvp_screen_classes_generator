@@ -1,6 +1,7 @@
 package com.agna.screen.generator.entity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -10,11 +11,13 @@ public class ClassTemplate {
     private String classNameTemplate;
     private String codeTemplate;
     private List<Part> parts = new ArrayList<Part>();
+    private Config config = new Config();
 
-    public ClassTemplate(String classNameTemplate, String codeTemplate, List<Part> parts) {
+    public ClassTemplate(String classNameTemplate, String codeTemplate, List<Part> parts, Config config) {
         this.classNameTemplate = classNameTemplate;
         this.codeTemplate = codeTemplate;
         this.parts = parts;
+        this.config = config;
     }
 
     public String getClassNameTemplate() {
@@ -27,5 +30,9 @@ public class ClassTemplate {
 
     public List<Part> getParts() {
         return parts;
+    }
+
+    public Config getConfig() {
+        return config;
     }
 }

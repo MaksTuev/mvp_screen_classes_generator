@@ -34,11 +34,15 @@ public class FullConfigurationReader {
 
         List<ClassTemplate> templates = new ArrayList<>();
         File[] templateFiles = new File(SCREEN_TEMPLATES_FOLDER).listFiles();
+        if(templateFiles == null) {
+            throw new IllegalStateException("template folder empty");
+        }
         for (File templateFile : templateFiles) {
             if (templateFile.isFile()) {
                 String classTemplateString = sanitizeJson(ReaderHelper.readFile(templateFile));
                 ClassTemplate classTemplate = gson.fromJson(classTemplateString, ClassTemplateObj.class).transform();
                 templates.add(classTemplate);
+                System.out.printf("sanitized Class Template:\n"+ classTemplate.getCodeTemplate()+"\n");
             }
         }
 
